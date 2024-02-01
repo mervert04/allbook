@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+  <link href="style/style.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <title>Title</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+  integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+  integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
+  integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
+  crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/6b99eaf61d.js" crossorigin="anonymous"></script>
+<script defer src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+
+  <div class="header"> 
+    <div class="btn-group">
+    <button type="button" class="btn btn-outline-dark"><a href="/index2" class="logo" style="text-decoration: none;color: #fefefe; ">📚Allbook-Shop</a></button>
+      <div class="header-left">
+       
+    <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration: none;color: #fefefe;">
+      Genre
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="Novel">Novel</a>
+      <a class="dropdown-item" href="Graphic Novel">Graphic Novel</a>
+      <a class="dropdown-item" href="Manga">Manga</a>
+      <a class="dropdown-item" href="Romance">Romance</a>
+   
+  </div>
+        
+        
+        <button type="button" class="btn btn-outline-dark"><a href="wishlist" style="text-decoration: none;color: #fefefe;">💗 Wishlist</a></button>
+        <button type="button" class="btn btn-outline-dark"><a href="about"  style="text-decoration: none;color: #fefefe;">Books</a></button>
+      </div></div>
+      <div class="header-right">
+       
+        <ul class="nav justify-content-center">
+          <li class="nav-item" style="margin-right: 60px;"><form class="form-inline my-2 my-lg-0" action="/search" method="post">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search by author..." name="author" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+         </li>
+        </div>
+    </div>
+    <h1 style="text-align: center;font-size: 35px;color: #800000;"><b><%=route%></b></h1>
+  <main>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+
+<% for(var i = 0 ; i< books.length; i++){%>
+    
+  <div class="col-sm-4">
+      <div class="card text-center" style="border-radius: 10px;">
+    <div class="card-body" style="border-radius: 10px;background-color: #b8e2f2;">
+      <img src="<%=books[i].img%>" style="width: 65%;text-align: center;">
+      <div class="card-body" style="text-align: center;">
+        <h5 class="card-title"><a href="/<%=books[i].genre%>/<%=books[i]._id%>" style="text-decoration:none; color:black; text-align: center;"><%=books[i].title%></a></h5>
+        <p style="color:red; text-align: center;">$<%=books[i].price%></p>
+        <ul class="nav justify-content-center">
+        <li class="nav-item">
+        <form class="d-flex" action="/wishlist/<%=books[i]._id%>" method="post">
+          <button class="btn btn-danger" style="background:#feb1d3; text-align: center;" type="submit">Add to wishlist</button>
+        </form>
+      </li>
+        <li class="nav-item">
+          <form action="payment/<%=books[i]._id%>" method="POST">
+            <script
+                src="//checkout.stripe.com/v2/checkout.js"
+                class="stripe-button"
+                data-key="<%= key %>"
+                data-amount="<%=books[i].price*100%>"
+                data-currency="usd"
+                data-name="Allbook-Shop"
+                data-description="Buy <%=books[i].title%>"
+                data-address=""
+                data-locale="auto" >
+                </script>
+            </form>
+            <script type="text/javascript">
+              $(document).ready(function(){
+                  $(".stripe-button").remove();
+                      $("button.stripe-button-el").removeAttr('style').css({
+                          "display":"inline-block",
+                          "width":"100%",
+                          "padding":"7px",
+                          "background":"#a6e8d8",
+                          "color":"white",
+                          "border":"#64b6ac",
+                          "font-size":"15px" }).html("Checkout");
+                  });
+          </script>
+      </li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </div> 
+<%}%>
+
+
+      </div>
+</main>
+</body>
+</html>

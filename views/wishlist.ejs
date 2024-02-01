@@ -1,0 +1,59 @@
+<%- include("header") %>
+<h1 style="text-align: center;font-size: 35px;color: #800000;"><b>Wishlist</b></h1>
+  
+  <main>
+    <% for (var i=0; i< wishlist.length; i++){ %>
+      <div class="card mb-2" style="max-width: 540px;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img src="<%=wishlist[i].img%>" class="card-img" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title" style="text-decoration: none;color:black"><a href="/<%=wishlist[i].genre%>/<%=wishlist[i].id%>" style="text-decoration: none;color:#800000"><%=wishlist[i].title%></a></h5>
+              <h7>by <%=wishlist[i].author%></h7>
+              <br>
+              <br>
+              <h4 style="color:#800000 ;">$<%=wishlist[i].price%></h4>
+              <br>
+              <br>
+              <ul class="nav justify-content-center">
+                <li class="nav-item" style="margin-right:50px">
+                  <form class="d-flex" action="/remove/<%=wishlist[i]._id%>" method="post">
+                    <button class="btn btn-outline-secondary" type="submit">Delete</button>
+                  </form></li>
+                <li class="nav-item">
+                  <form action="payment/<%=wishlist[i].id%>" method="POST">
+                    <script
+                        src="//checkout.stripe.com/v2/checkout.js"
+                        class="stripe-button"
+                        data-key="<%= key %>"
+                        data-amount="<%=wishlist[i].price*100%>"
+                        data-currency="usd"
+                        data-name="Allbook-Shop"
+                        data-description="Buy <%=wishlist[i].title%>"
+                        data-address=""
+                        data-locale="auto" >
+                        </script>
+                    </form>
+                    <script type="text/javascript">
+                      $(document).ready(function(){
+                          $(".stripe-button").remove();
+                              $("button.stripe-button-el").removeAttr('style').css({
+                                  "display":"inline-block",
+                                  "width":"100%",
+                                  "padding":"7px",
+                                  "background":"#a6e8d8",
+                                  "color":"white",
+                                  "border":"#64b6ac",
+                                  "font-size":"15px" }).html("Checkout");
+                          });
+                  </script></li>
+         
+        </div> </div>
+          </div>
+      </div>
+      <%}%>
+</main>
+</body>
+</html>

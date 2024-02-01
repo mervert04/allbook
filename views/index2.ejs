@@ -1,0 +1,66 @@
+<%- include("header") %>
+  <h1 style="padding: 20px;color: #800000;text-align: center;"><b>Bestselling Books</b></h1>
+  
+  <div class="owl-carousel owl-theme">
+    <% for(var i=0; i < bestseller.length; i++){ %>
+        <form action="/wishlist/<%= bestseller[i]._id %>" method="post">
+            <div class="item">
+                <p><b><a href="/<%= bestseller[i].genre %>/<%= bestseller[i]._id %>" style="text-decoration:none; color:black; text-align: center;"><%= bestseller[i].title %></a></b></p>
+                <img src="<%= bestseller[i].img %>">
+                <p><%= bestseller[i].author %></p>
+                <p style="color: #d94040; font-size: 17px;">$<%= bestseller[i].price %></p>
+                <div class="details">
+                    <button type="submit" class="wishlist" style="color: #fefefe;" id="<%= 'wishlistButton' + i %>">Add to wishlist</button>
+                </div>
+            </div>
+        </form>
+    <% } %>
+</div>
+
+  <div class="row">
+    <div class="col-sm-3"  >
+      <div class="card text-center">
+        <div class="card-body">
+            <img src="img/heartstopper.jpg" style="width: 120px;">
+        </div>
+      </div><p style="text-align: center;"><a href="Graphic Novel" style="color:black ;text-decoration: none;"><b>Graphic Novel</b></a></p>
+    </div>
+    
+    <div class="col-sm-3">
+      <div class="card text-center">
+        <div class="card-body">
+            <img src="img/modao1.jpg" style="width: 120px;">
+         
+        </div>
+      </div><p style="text-align: center;"><a href="Novel" style="color:black;text-decoration: none;"><b>Novel</b></a></p>
+    </div>
+   
+    <div class="col-sm-3">
+        <div class="card text-center">
+          <div class="card-body">
+            <img src="img\spy-x-family-vol-7-9781974728480_hr.jpg" style="width: 120px;">
+          </div>
+        </div><p style="text-align: center;"><a href="Manga" style="color:black;text-align: center;text-decoration: none;"><b>Manga</b></a></p>
+      </div>
+      
+   
+      <div class="col-sm-3">
+        <div class="card text-center">
+          <div class="card-body">
+              <img src="img\lovehypothesis.jpg" style="width: 120px;">
+          </div>
+        </div><p style="text-align: center;"><a href="Romance" style="color:black;text-align: center;text-decoration: none;"><b>Romance</b></a></p>
+      </div>
+      </div>
+      
+      
+        
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+
+</html>
